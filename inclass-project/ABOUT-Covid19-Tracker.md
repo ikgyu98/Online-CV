@@ -1,5 +1,15 @@
-# STAT 440 Statistical Data Management
-### Spring 2022 Final Project
+# COVID-19 Tracking Shiny App
+## STAT 440 - Statistical Data Management [SPRING 2022]
+Effectiveness of Non-Pharmaceutical Intervention by R0 & Rt computation
+> Ikgyu Shin (ikgyus2@illinois.edu)
+
+
+## Table of Contents
+* [General Information](#general-information)
+* [Minimum Requirements](#minimum-requirements)
+* [Possible Improvements](#possible-improvements)
+* [Acknowledgements](#acknowledgements)
+
 
 ## General Information
 
@@ -10,3 +20,28 @@ The Shiny app or dashboard may be based on any datasets (that had a data descrip
 ## Minimum Requirements
 
 The Shiny app or dashboard should only use data with a URL. There must be at least 1 data visualization and at least 1 summary table or tibble returned.
+
+- Start & End Date
+  - 02/26/2022 ~ 04/09/2022 (7 weeks)
+
+- What problem does it (intend to) solve? | What is the purpose of your project?
+  - Music shuffling systems of many major streaming services never had provided me satisfactory results. Here, we have decided to build an algorithm of our own which does not simply recommend songs that of similar genre & artist, but actually analyzes the musical feature of your choice of song **(input)** and recommends you the song **(output)** that shares similar musical characteristics.
+
+- Brief explanation of your approach
+  - We have attempted to find similarities among many different songs through their musical chord; however, chord processes were not sufficient in representing complexity of a music. Here, through researches, we were able to find Python libraries that provide sophisticated musical trait: Librosa and Spotipy. With that, after a week of research in scholaric articles, we were able to narrow variables down, then ended up with satisfactory classification result
+
+
+## Possible Improvements
+
+**Improvements:**
+- Improvement 1
+- Improvement 2
+
+**How:**
+- How to improve Improvement 1
+- How to improve Improvement 2
+
+
+## Acknowledgements
+
+- *This project borrowed knowledges from __[this precedence post](https://www.kdnuggets.com/2020/02/audio-data-analysis-deep-learning-python-part-1.html)__.*
