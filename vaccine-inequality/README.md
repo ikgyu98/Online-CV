@@ -1,14 +1,12 @@
-# Undergraduate Research Opportunity
-## Undergraduate Research in Dr. Pamela Martinez’s laboratory [SPRING & SUMMER 2022]
-Host heterogeneity and SARS-CoV-2: lessons learned from vaccine uptake across socioeconomic groups
-> Ikgyu Shin (ikgyus2@illinois.edu)
+# Undergraduate Research Experience in Statistics at UIUC
+
+### Sub-national SARS-CoV-2 vaccine uptake inequalities and their consequences for disease transmission <sub> Sophie Larsen, ***Ikgyu Shin***, Rafael Anorga, Jefrin Joseph, Haylee West, Marc Lipsitch, Ayesha S. Mahmud, and Pamela P. Martinez </sub>
 
 
 ## Table of Contents
 * [Abstract](#abstract)
 * [Position](#position)
 * [File Description](#file-description)
-* [Acknowledgements](#acknowledgements)
 
 
 ## Abstract
@@ -17,23 +15,16 @@ To understand infectious disease dynamics, one must identify social and biologic
 
 ## Position
 
-The Shiny app or dashboard should only use data with a URL. There must be at least 1 data visualization and at least 1 summary table or tibble returned.
+Co-author, Lead Data Manager
 
 - Start & End Date
-  - 02/26/2022 ~ 04/09/2022 (7 weeks)
-
+  - 01/30/2022 ~ Present
+  - To be submitted in December 2022
 
 ## File Description
 
-**Improvements:**
-- Improvement 1
-- Improvement 2
-
-**How:**
-- How to improve Improvement 1
-- How to improve Improvement 2
+* File name starts with the ***first two letters of the countries***. i.e. Brazil -> BR
+* File name with *Set_1.csv* indicates code for ***vaccination dataset***. 
+* File name with *Set_2.csv* indicates code for ***socio economic dataset***.
 
 
-## Acknowledgements
-
-- *This project borrowed knowledges from __[this precedence post](https://www.kdnuggets.com/2020/02/audio-data-analysis-deep-learning-python-part-1.html)__.*
