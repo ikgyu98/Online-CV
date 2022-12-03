@@ -2,6 +2,7 @@
 
 ### Sub-national SARS-CoV-2 vaccine uptake inequalities and their consequences for disease transmission <sub> Sophie Larsen, ***Ikgyu Shin***, Rafael Anorga, Jefrin Joseph, Haylee West, Marc Lipsitch, Ayesha S. Mahmud, and Pamela P. Martinez </sub>
 
+![Cover Page](coverpaper.png)
 
 ## Table of Contents
 * [Abstract](#abstract)
