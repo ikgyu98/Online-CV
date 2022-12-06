@@ -24,5 +24,8 @@
 
 > 
 
+### Data Science & Artificial Intelligence Society (DAIS) at UIUC
 
+* *__[dais-activity:](https://github.com/UIUCDAIS)__* 
 
+>
