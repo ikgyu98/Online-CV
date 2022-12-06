@@ -26,6 +26,6 @@
 
 ### Data Science & Artificial Intelligence Society (DAIS) at UIUC
 
-* *__[dais-activity:](https://github.com/UIUCDAIS)__* 
+* *__[DAIS Activities:](https://github.com/UIUCDAIS)__* 
 
->
+> President of DAIS (FA22 - SP23)
