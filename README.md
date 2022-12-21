@@ -20,10 +20,6 @@
 
 > 
 
-* *__[climate-disease:](https://github.com/UIUCDAIS/PROJECTS-CLOSED)__* 
-
-> 
-
 ### Data Science & Artificial Intelligence Society (DAIS) at UIUC
 
 * *__[DAIS Activities:](https://github.com/UIUCDAIS)__* 
