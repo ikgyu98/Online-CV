@@ -1,0 +1,534 @@
+---
+title: "Effectiveness of South Korean Non-Pharmaceutical Interventions (NPI) against SARS-CoV-2"
+author: "Ikgyu Shin Tom"
+date: "5/1/2022"
+output: pdf_document
+---
+
+
+```{r, message=FALSE, warning=FALSE}
+library(readr)
+library(readxl)
+library(tibble)
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(stringr)
+library(EpiEstim)
+library(incidence)
+library(remotes)
+library(ggplot2)
+library(sars2pack)
+library(random)
+library(purrr)
+library(hdi)
+library(zoo)
+library(smoother)
+library(data.table)
+require(data.table)
+```
+
+Confirmed cases data
+
+```{r, message=FALSE, warning=FALSE}
+jhu_positive <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv", 
+                         col_types = cols(`Province/State` = col_skip(), 
+                                          Lat = col_skip(), Long = col_skip()))%>%
+  filter(`Country/Region` == "Korea, South")%>%
+  pivot_longer(!`Country/Region`, names_to = "date", values_to = "cum")%>%
+  mutate(num = c(cum[1],diff(cum)))%>%
+  mutate(date = format(as.Date(date, "%m/%d/%y")))%>%
+  mutate(date = ymd(date))
+
+seoul_covid <- read_csv("covidtemp.csv")%>%
+  mutate(`자치구 기준일` = ymd(substring(`자치구 기준일`,1, nchar(`자치구 기준일`)-3)))%>%
+  rename(date = `자치구 기준일`)%>%
+  mutate(incidence = rowSums(across(where(is.numeric))))%>%
+  dplyr::select(-c(2:27))%>%
+  arrange(date)%>%
+  distinct(date, .keep_all = TRUE)%>%
+  slice(1:760)
+
+seoul_covid_daily <- read_csv("covidtemp.csv")%>%
+  mutate(`자치구 기준일` = ymd(substring(`자치구 기준일`,1, nchar(`자치구 기준일`)-3)))%>%
+  rename(date = `자치구 기준일`)%>%
+  mutate(incidence = rowSums(across(where(is.numeric))))%>%
+  dplyr::select(-c(2:27))%>%
+  arrange(date)%>%
+  distinct(date, .keep_all = TRUE)
+
+seoul_covid_cum <- read_csv("covidtemp.csv")%>%
+  mutate(`자치구 기준일` = ymd(substring(`자치구 기준일`,1, nchar(`자치구 기준일`)-3)))%>%
+  rename(date = `자치구 기준일`)%>%
+  mutate(incidence = rowSums(across(where(is.numeric))))%>%
+  dplyr::select(-c(2:27))%>%
+  arrange(date)%>%
+  distinct(date, .keep_all = TRUE)%>%
+  mutate(cumincidence = cumsum(incidence))%>%
+  mutate(incidence =NULL)
+```
+
+##########################################################################################
+R0 from Jeong
+##########################################################################################
+
+```{r, warning=FALSE}
+dt <- jhu_positive%>%
+  mutate(`Country/Region`= NULL)%>%
+  mutate(cum = NULL)
+
+dt <- as.data.table(dt)
+
+colnames(dt) <- c("date", "i")
+```
+
+2020/02/14~2020/03/13
+
+```{r, warning=FALSE}
+i <- dt$i[24:52]
+t <- c(0:28)
+i0 <- 1
+targetf <- function(r) sum(i - i0*exp(r*t))^2
+rs <- seq(0,0.35,0.001)    
+plot(rs, sapply(rs, targetf)) # 0.3 부근에서 최소화 되는걸 볼 수 있음
+
+rhat <- optim(par=0.1, fn=targetf, lower=0.01, upper=0.5, method="Brent") # 최초 시도값 0.1
+rhat$par # 0.2996에서 목적함수 최소화
+
+```
+
+2020/02/15~2020/03/13
+
+```{r, warning=FALSE}
+i <- dt$i[25:52]
+t <- c(0:27)
+i0 <- 1
+targetf <- function(r) sum(i - i0*exp(r*t))^2
+rs <- seq(0,0.35,0.001)    
+plot(rs, sapply(rs, targetf)) # 0.3 부근에서 최소화 되는걸 볼 수 있음
+
+rhat <- optim(par=0.1, fn=targetf, lower=0.01, upper=0.5, method="Brent") # 최초 시도값 0.1
+rhat$par # 0.2996에서 목적함수 최소화
+
+
+```
+
+2020/02/16~2020/03/13
+
+```{r, warning=FALSE}
+i <- dt$i[26:52]
+t <- c(0:26)
+i0 <- 1
+targetf <- function(r) sum(i - i0*exp(r*t))^2
+rs <- seq(0,0.35,0.001)    
+plot(rs, sapply(rs, targetf)) # 0.3 부근에서 최소화 되는걸 볼 수 있음
+
+rhat <- optim(par=0.1, fn=targetf, lower=0.01, upper=0.5, method="Brent") # 최초 시도값 0.1
+rhat$par # 0.2996에서 목적함수 최소화
+
+
+```
+
+
+```{r}
+numb <- (0.2691991 +  0.280491 +  0.2926928)/3
+(1 + 5.19*numb  *0.1599229^2 )^(1/0.1599229^2)
+print(numb)
+```
+
+
+<!-- R0 from sars2pack -->
+
+<!-- ```{r} -->
+<!-- sk_R0 <- as.incidence(jhu_positive$num, dates = jhu_positive$date) -->
+<!-- plot(sk_R0) -->
+
+<!-- sk_R0 <- sk_R0%>% -->
+<!--   dplyr::rename(I = "counts") -->
+
+<!-- sk_R00 <- incidence(jhu_positive$num) -->
+
+<!-- daily_i <- incidence(jhu_positive$num) -->
+<!-- library(earlyR) -->
+
+<!-- simple_R <- get_R(daily_i, si_mean = 5.195, si_sd = 0.83, max_R = 5) -->
+
+<!-- est_R0 <- estimate_R(sk_R0, -->
+<!--                   method = "parametric_si", -->
+<!--                   config = make_config(list(mean_si = 5.195, std_si = 0.83))) -->
+
+<!-- ``` -->
+
+##########################################################################################
+Rt from sars2pack
+##########################################################################################
+
+```{r, warning=FALSE}
+sk_Rt = estimate_Rt(
+  seoul_covid_daily,
+  cases_column = "incidence",
+  date_column = "date",
+  estimation_family='epiestim',
+  cumulative=FALSE,
+  method = 'parametric_si',
+  config = list(mean_si=5.195, std_si=0.83))
+
+
+sk_Rt1 = ggplot(sk_Rt, aes(x=date_start,y=`Mean(R)`)) + geom_line()
+sk_Rt1
+sk_Rt1 + geom_ribbon(aes(ymin=`Quantile.0.05(R)`, ymax=`Quantile.0.95(R)`), alpha=0.5) +
+    geom_vline(xintercept = as.Date(c(("2020-03-22"),
+                        ("2020-05-06"),
+                        ("2020-08-19"),
+                        ("2020-08-30"),
+                        ("2020-09-14"),
+                        ("2020-10-12"),
+                        ("2020-11-19"),
+                        ("2020-11-24"),
+                        ("2020-12-08"),
+                        ("2021-02-15"),
+                        ("2021-07-12"),
+                        ("2021-11-01"),
+                        ("2022-03-20"))), linetype = 'dashed', size = 0.5, color = 'grey')+
+  labs(
+      title = "R(t)",
+      x = "Date", y = "R(t) mean"
+    )
+```
+
+```{r}
+p = ggplot(sk_Rt, aes(x=date_start,y=1/`Mean(R)`)) + geom_line()
+p
+p + geom_ribbon(aes(ymax=1/`Quantile.0.05(R)`, ymin=1/`Quantile.0.95(R)`), alpha=0.5)
+  
+p + geom_smooth()+
+    labs(
+      title = "R(t) trend",
+      x = "Date", y = "1/R(t)"
+    )+
+  geom_vline(xintercept = as.Date(c(("2020-03-22"),
+                        ("2020-05-06"),
+                        ("2020-08-19"),
+                        ("2020-08-30"),
+                        ("2020-09-14"),
+                        ("2020-10-12"),
+                        ("2020-11-19"),
+                        ("2020-11-24"),
+                        ("2020-12-08"),
+                        ("2021-02-15"),
+                        ("2021-07-12"),
+                        ("2021-11-01"),
+                        ("2022-03-20"))), linetype = 'dashed', size = 0.5, color = 'grey')
+```
+
+```{r}
+sk_Rt_table <- sk_Rt%>%
+  dplyr::select(c("date_start", "Mean(R)"))%>%    
+  rename(date = date_start)%>%
+  mutate(ranges = cut(date,
+                      as.Date(c(("2020-03-22"),
+                        ("2020-05-06"),
+                        ("2020-08-19"),
+                        ("2020-08-30"),
+                        ("2020-09-14"),
+                        ("2020-10-12"),
+                        ("2020-11-19"),
+                        ("2020-11-24"),
+                        ("2020-12-08"),
+                        ("2021-02-15"),
+                        ("2021-07-12"),
+                        ("2021-11-01")
+                        )))) %>% 
+  group_by(ranges) %>% 
+  summarise(mean = mean(`Mean(R)`), sd = sd(`Mean(R)`), min = min(`Mean(R)`), max = max(`Mean(R)`))
+
+sk_Rt_table$NPI <- c("3_1", "3_1", "3_2", "3_2.5", "3_2", "3_1", "5_1.5", "5_2", "5_2.5", "5_2", "4_4", "mitigation")
+sk_Rt_table<-sk_Rt_table %>%
+  relocate("NPI", .before = "ranges")%>%
+  mutate(`ranges` = NULL)
+sk_Rt_table
+```
+
+
+##########################################################################################
+Rt from Kevin Systrom
+##########################################################################################
+
+```{r}
+smooth_new_cases <- function(cases){
+  cases %>% 
+    arrange(date) %>%
+    mutate(new_cases_smooth = round(
+      smoother::smth(incidence, window = 7, tails = TRUE)
+    )) %>%
+    dplyr::select(`date`, `incidence`, `new_cases_smooth`)
+}
+
+seoul_covid %>% 
+  smooth_new_cases() %>%
+  head()
+```
+
+
+```{r}
+plot_new_cases <- function(cases){
+  cases %>%
+    ggplot(aes(x = date, y = incidence)) +
+    geom_line(linetype = 'dotted', color = 'gray40') +
+    geom_line(aes(y = new_cases_smooth), color = "#14243e") +
+    labs(
+      title = "New cases per day",
+      x = NULL, y = NULL
+    )
+}
+
+seoul_covid %>% 
+  smooth_new_cases() %>%
+  plot_new_cases()
+```
+
+
+```{r}
+R_T_MAX = 12
+r_t_range = seq(0, R_T_MAX, length = R_T_MAX*100 + 1)
+GAMMA = 1/5.195
+
+compute_likelihood <- function(cases){
+  likelihood <- cases %>%
+    filter(new_cases_smooth > 0) %>% 
+    arrange(date) %>%
+    crossing(r_t = r_t_range) %>% 
+    group_by(r_t) %>% 
+    mutate(lambda = lag(new_cases_smooth, 1) * exp(GAMMA * (r_t - 1))) %>%
+    ungroup() %>%
+    mutate(likelihood_r_t = dpois(new_cases_smooth, lambda, log = TRUE)) %>% 
+    filter(date > min(date))
+}
+
+seoul_covid %>% 
+  smooth_new_cases() %>% 
+  compute_likelihood() %>%
+  head()
+```
+
+```{r}
+
+compute_posterior <- function(likelihood){
+  likelihood %>% 
+    arrange(date) %>% 
+    group_by(r_t) %>% 
+    mutate(posterior = exp(
+      zoo::rollapplyr(likelihood_r_t, 7, sum, partial = TRUE))) %>% 
+    group_by(date) %>% 
+    mutate(posterior = posterior / sum(posterior, na.rm = TRUE)) %>% 
+    mutate(posterior = ifelse(is.nan(posterior), 0, posterior)) %>%
+    ungroup() %>%
+    dplyr::select(-likelihood_r_t)
+}
+
+seoul_covid %>%
+  smooth_new_cases() %>% 
+  compute_likelihood() %>% 
+  compute_posterior() %>%
+  head()
+```
+
+
+```{r}
+
+plot_posteriors <- function(posteriors){
+  posteriors %>% 
+    ggplot(aes(x = r_t, y = posterior, group = date)) +
+    geom_line(alpha = 0.2) +
+    labs(
+      title = expression(paste("Daily Posterior of R"[t], " by day")),
+      x = '',
+      y = '') +
+    coord_cartesian(xlim = c(0.4, 4)) +
+    theme(legend.position = 'none')
+}
+
+seoul_covid %>%
+  smooth_new_cases() %>% 
+  compute_likelihood() %>% 
+  compute_posterior() %>% 
+  plot_posteriors()
+```
+
+
+```{r}
+
+estimate_rt <- function(posteriors){
+  posteriors %>% 
+    group_by(date) %>% 
+    summarize(
+      r_t_simulated = list(sample(r_t_range, 10000, replace = TRUE, prob = posterior)),
+      r_t_most_likely = r_t_range[which.max(posterior)]
+    ) %>% 
+    # mutate(
+    #   r_t_lo = map_dbl(r_t_simulated, ~ hdi(.x)[1]),
+    #   r_t_hi = map_dbl(r_t_simulated, ~ hdi(.x)[2])
+    # ) %>% 
+    dplyr::select(-r_t_simulated) 
+}
+
+sk_Rt_kev<-seoul_covid %>%
+  smooth_new_cases() %>% 
+  compute_likelihood() %>% 
+  compute_posterior() %>% 
+  estimate_rt() %>%
+  head()
+
+```
+
+
+
+```{r}
+
+
+plot_estimates <- function(estimates){
+  estimates %>% 
+    ggplot(aes(x = date, y = r_t_most_likely)) +
+    geom_line(color = "#14243e") +
+    geom_hline(yintercept = 1, linetype = 'dashed') +
+    geom_vline(xintercept = as.Date(c(("2020-03-22"),
+                        ("2020-05-06"),
+                        ("2020-08-19"),
+                        ("2020-08-30"),
+                        ("2020-09-14"),
+                        ("2020-10-12"),
+                        ("2020-11-19"),
+                        ("2020-11-24"),
+                        ("2020-12-08"),
+                        ("2021-02-15"),
+                        ("2021-07-12"),
+                        ("2021-11-01"),
+                        ("2022-03-20"))), linetype = 'dashed', size = 0.5, color = 'grey')+
+    labs(
+      title = expression('Real time R'[t]), x = '', y = '',
+    ) +
+    coord_cartesian(ylim = c(0, 4))
+}
+
+seoul_covid %>%
+  smooth_new_cases() %>% 
+  compute_likelihood() %>% 
+  compute_posterior() %>% 
+  estimate_rt() %>% 
+  plot_estimates()
+```
+
+
+
+```{r}
+sk_Rt_kev_table <- sk_Rt_kev%>%
+  rename(Rt = r_t_most_likely)%>%
+  mutate(ranges = cut(date,
+                      as.Date(c(("2020-03-22"),
+                        ("2020-05-06"),
+                        ("2020-08-19"),
+                        ("2020-08-30"),
+                        ("2020-09-14"),
+                        ("2020-10-12"),
+                        ("2020-11-19"),
+                        ("2020-11-24"),
+                        ("2020-12-08"),
+                        ("2021-02-15"),
+                        ("2021-07-12"),
+                        ("2021-11-01")
+                        )))) %>% 
+  group_by(ranges) %>% 
+  summarise(mean = mean(`Rt`), sd = sd(`Rt`), min = min(`Rt`), max = max(`Rt`))
+
+sk_Rt_kev_table$NPI <- c("3_1", "3_1", "3_2", "3_2.5", "3_2", "3_1", "5_1.5", "5_2", "5_2.5", "5_2", "4_4", "mitigation")
+sk_Rt_kev_table<-sk_Rt_kev_table %>%
+  relocate("NPI", .before = "ranges")%>%
+  mutate(`ranges` = NULL)
+
+sk_Rt_kev_table
+```
+
+
+Death cases data 
+
+
+```{r, message=FALSE, warning=FALSE}
+
+
+jhu_death <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv", 
+                      col_types = cols(`Province/State` = col_skip(), 
+                                       Lat = col_skip(), Long = col_skip()))%>%
+  filter(`Country/Region` == "Korea, South")%>%
+  pivot_longer(!`Country/Region`, names_to = "date", values_to = "cum")%>%
+  mutate(num = c(cum[1],diff(cum)))%>%
+  mutate(date = format(as.Date(date, "%m/%d/%y")))%>%
+  mutate(date = ymd(date))
+
+nocoviddeath <- read_csv("nocoviddeath.csv")
+nocoviddeath <- nocoviddeath[2, seq(4,374,10)]%>%
+  pivot_longer(cols = everything(), names_to = "date", values_to = "value")%>%
+  mutate(date = seq(as.Date("2019/1/1"), by = "month", length.out = 38))%>%
+  mutate(date = as.yearmon(date))%>%
+  mutate(value = as.numeric(value))%>%
+  mutate(scaled = value/which.max(value))
+```
+
+
+```{r}
+jhu_death <- jhu_death%>%
+  mutate(`Country/Region` = NULL)%>%
+  mutate(`cum` = NULL)
+jhu_death_ <- jhu_death%>%
+  mutate(month = format(date, "%m"), year = format(date, "%Y"))%>%
+  mutate(date = NULL)
+
+jhu_death_bymonth<-jhu_death_%>%
+  group_by(month, year) %>%
+  summarise(total = sum(as.numeric(num)))%>%
+  ungroup
+
+jhu_death_bymonth$date <- as.yearmon(paste(jhu_death_bymonth$year, jhu_death_bymonth$month), "%Y %m")
+
+jhu_death_bymonth<-jhu_death_bymonth%>%
+  dplyr::select(c("date", "total"))%>%
+  mutate(scaled = total/which.max(total))
+
+```
+
+
+```{r}
+death <- merge(nocoviddeath, jhu_death_bymonth, by = "date")%>%
+  mutate(`scaled.x` = NULL)%>%
+  mutate(`scaled.y` = NULL)%>%
+  mutate(`proportion` = total/value)%>%
+  mutate(`proportion` = 100*`proportion`)%>%
+  rename(`total death` = `value`)%>%
+  rename(`COVID death` = `total`)
+
+
+```
+
+
+```{r}
+death %>% 
+    ggplot(aes(x = date, y = proportion)) +
+    geom_line(color = "#14243e") +
+    geom_vline(xintercept = as.yearmon("2021-11"), linetype = 'dashed', size = 1, color = 'grey')+
+    labs(
+      title = expression('Covid death/monthly death'), x = 'date', y = 'proportion(%)',
+    ) 
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
