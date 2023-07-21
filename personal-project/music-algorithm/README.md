@@ -35,12 +35,11 @@ Music Recommendation Algorithm that finds you the song you would actually enjoy!
 ## Possible Improvements
 
 **Improvements:**
-- Improvement 1
-- Improvement 2
+- Simply averaging the numerical musical feature certainly cannot capture the character of the music. As we used the average value of the data, the song could have clustered/characterized slightly differently.
+- More training sets.
 
 **How:**
-- How to improve Improvement 1
-- How to improve Improvement 2
+- To improve the means to capture the musics' characteristics, we could create more variables (the average at 1:00, 2:00, and 3:00 respectively, etc) to better capture the piece in full. 
 
 
 ## Acknowledgements
