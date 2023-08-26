@@ -16,7 +16,7 @@
 
 > Pathogen Dynamics Across Scales (PaDAS) Lab led by Professor Pamela Martinez	
 
-* *__[vaccine-inequality:](https://github.com/ikgyu98/Online-CV/tree/main/vaccine-inequality)__* Sub-national SARS-CoV-2 vaccine uptake inequalities and their consequences for disease transmission
+* *__[vaccine-inequality:](https://github.com/ikgyu98/Online-CV/tree/main/vaccine-inequality)__* Quantifying the impact of SARS-CoV-2 temporal vaccination trends and disparities on disease control
 
 > 
 
