@@ -1,12 +1,13 @@
 # Undergraduate Research Experience in Statistics at UIUC
 
-### Sub-national SARS-CoV-2 vaccine uptake inequalities and their consequences for disease transmission <sub> Sophie Larsen, ***Ikgyu Shin***, Rafael Anorga, Jefrin Joseph, Haylee West, Marc Lipsitch, Ayesha S. Mahmud, and Pamela P. Martinez </sub>
+## Quantifying the impact of SARS-CoV-2 temporal vaccination trends and disparities on disease control *<sub> Sophie Larsen, ***Ikgyu Shin***, Rafael Anorga, Jefrin Joseph, Haylee West, Marc Lipsitch, Ayesha S. Mahmud, and Pamela P. Martinez </sub>*
 
-![Cover Page](coverpaper.png)
+## The research article is now __[published](https://www.science.org/doi/10.1126/sciadv.adh9920)__.
 
 ## Table of Contents
 * [Abstract](#abstract)
 * [Position](#position)
+* [Contribution](#contribution)
 * [File Description](#file-description)
 
 
@@ -16,15 +17,15 @@ To understand infectious disease dynamics, one must identify social and biologic
 
 ## Position
 
-Co-author, Lead Data Manager
+Second author, Lead Data Manager
 
-- Start & End Date
-  - 01/30/2022 ~ Present
-  - To be submitted in December 2022
+## Contribution
+
+Second
 
 ## File Description
 
-* File name starts with the ***first two letters of the countries***. i.e. Brazil -> BR
+* File name starts with the ***first two letters of the countries***. i.e., Brazil -> BR
 * File name with *Set_1.csv* indicates code for ***vaccination dataset***. 
 * File name with *Set_2.csv* indicates code for ***socio economic dataset***.
 
