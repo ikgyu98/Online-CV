@@ -16,11 +16,7 @@ ses <- read_csv("Desktop/vaccine_inequality/ses.csv")
 ses$key <- paste(ses$name, ses$stateac)
 
 
-
-
-
-write_csv(testtests, "Desktop/vaccine_inequality/missing2.csv")
-
+# write_csv(testtests, "Desktop/vaccine_inequality/missing2.csv")
 
 
 final <- ses %>% inner_join(code, by = "key")%>%
@@ -35,12 +31,3 @@ final <- ses %>% inner_join(code, by = "key")%>%
 write_csv(final, "Desktop/vaccine_inequality/BR_Set_2.csv")
   
   
-#   test <- ses %>% inner_join(code, by = "key")
-# 
-# testtest <- merge(x = ses, y = code, by = "key", all= TRUE)%>%
-#   filter(is.na(income10)|is.na(code))
-# 
-# testtests <- merge(x = ses, y = code, by = "key", all= TRUE)%>%
-#   filter(is.na(income10)|is.na(code))
-# 
-# write_csv(final, "Desktop/vaccine_inequality/BR_Set_2_sample.csv")
