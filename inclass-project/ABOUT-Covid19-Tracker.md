@@ -13,35 +13,33 @@ A Shiny application that provides a visual interface for COVID-19 trends, includ
 
 ## General Information
 
-The Final Project in this course is the creation of a single Shiny app or dashboard in R. Students are not allowed to work together on the final project. This Shiny app or dashboard is an opportunity for students to demonstrate the statistical data management concepts - including tool-making, accessing and importing data, cleaning and validating data, and data visualization - that they have learned this semester and apply them along with version control for collaboration. Your ideas and coding must be your own code.
-
-The Shiny app or dashboard may be based on any datasets (that had a data description) that were used in labs, homework, or the midterm exam. No other datasets are allowed. It is reasonable to make a Shiny app or dashboard that focuses on only one dataset. If students want their Shiny app or dashboard to work with multiple dataset or user-specified datasets (with URLs) then that is also acceptable.
+The project utilizes data sourced from the CSSEGISandData's GitHub repository, which hosts the widely recognized COVID-19 data maintained by the Johns Hopkins University Center for Systems Science and Engineering (CSSE). It encompasses daily updated figures on confirmed cases, deaths, and recoveries. This analysis involves the R programming language and heavily utilizes the dplyr, tidyr, and other packages. Key functions are implemented to preprocess the data—transforming, mutating, and filtering relevant details. The datasets for the U.S. are narrowed down to exclude non-state territories, and datasets for South Korea are handled separately. Additionally, calculations for the virus's reproduction number (Rt), which is essential for understanding its transmissibility, are provided for both the US and South Korea.
 
 ## Minimum Requirements
 
 The Shiny app or dashboard should only use data with a URL. There must be at least 1 data visualization and at least 1 summary table or tibble returned.
 
-- Start & End Date
-  - 02/26/2022 ~ 04/09/2022 (7 weeks)
-
 - What problem does it (intend to) solve? | What is the purpose of your project?
-  - Music shuffling systems of many major streaming services never had provided me satisfactory results. Here, we have decided to build an algorithm of our own which does not simply recommend songs that of similar genre & artist, but actually analyzes the musical feature of your choice of song **(input)** and recommends you the song **(output)** that shares similar musical characteristics.
+  - Data Preprocessing: To process raw data streams to create clear, workable datasets representing the daily incidence of confirmed cases, deaths, and recoveries in the U.S. and South Korea.
 
 - Brief explanation of your approach
-  - We have attempted to find similarities among many different songs through their musical chord; however, chord processes were not sufficient in representing complexity of a music. Here, through researches, we were able to find Python libraries that provide sophisticated musical trait: Librosa and Spotipy. With that, after a week of research in scholaric articles, we were able to narrow variables down, then ended up with satisfactory classification result
+  - Epidemic Analysis: To determine the reproduction number (Rt) of the COVID-19 virus for different states in the US and South Korea. This metric provides insights into the virus's contagiousness, helping policymakers decide on containment measures.
 
 
 ## Possible Improvements
 
 **Improvements:**
-- Improvement 1
-- Improvement 2
+- Automated Data Updating
+  
+- Integration of More Countries
+
 
 **How:**
-- How to improve Improvement 1
-- How to improve Improvement 2
+-  Implementing a script to automatically fetch the latest data from the CSSEGISandData's GitHub repository, ensuring the analysis is always based on the most recent data without manual input.
+  
+- Expanding the code structure to accommodate data from other countries enhances the analysis's global applicability and provides a more comprehensive view of the pandemic.
 
 
 ## Acknowledgements
 
-- *This project borrowed knowledges from __[this precedence post](https://www.kdnuggets.com/2020/02/audio-data-analysis-deep-learning-python-part-1.html)__.*
+- *This project borrowed knowledges from __[Official R Shiny website](https://shiny.posit.co/)__.*
