@@ -51,7 +51,5 @@ korea <- korea_vaccine%>%
   relocate(pop, .after = location)%>%
   replace(is.na(.), 0)
 
-# %>%
-#   mutate(pop_ = gsub(",", "", pop))
 
 write_csv(korea,"/Users/mac/Desktop/research/korea/KO_Set_1.csv")
