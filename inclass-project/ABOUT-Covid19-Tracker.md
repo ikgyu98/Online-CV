@@ -1,6 +1,6 @@
 # COVID-19 Tracking Shiny App
 ## STAT 440 - Statistical Data Management [SPRING 2022]
-Effectiveness of Non-Pharmaceutical Intervention by R0 & Rt computation
+A Shiny application that provides a visual interface for COVID-19 trends, including Confirmed, Death, Recovered cases, and estimated Effective Reproduction Number (Rt) trend.
 > Ikgyu Shin (ikgyus2@illinois.edu)
 
 
