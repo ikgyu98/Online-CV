@@ -3,12 +3,6 @@ library(tibble)
 library(dplyr)
 library(tidyr)
 
-# library(readxl)
-# library(data.table)
-# library(xml2)
-# library(XML)
-
-
 
 # italysimple <- read_csv("https://raw.githubusercontent.com/italia/covid19-opendata-vaccini/master/dati/somministrazioni-vaccini-latest.csv", 
 #                   col_types = cols(data = col_date(format = "%Y-%m-%d")))%>%
