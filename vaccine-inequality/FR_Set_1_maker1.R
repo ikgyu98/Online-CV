@@ -9,9 +9,6 @@ library(xlsx)
 
 france <- read_delim("Desktop/research/France Raw Dataset/vacsi-a-reg-2022-02-15-19h09.csv",
                      ";", escape_double = FALSE, trim_ws = TRUE)
-# france <- read_delim("vacsi-a-reg-2022-02-15-19h09.csv",
-#                      ";", escape_double = FALSE, trim_ws = TRUE)
-
 
 xxx<-france %>%
   mutate(location = case_when(
@@ -38,7 +35,6 @@ xxx<-france %>%
     reg == "08" ~ "Saint-Martin", TRUE ~ as.character(reg)))%>%
   relocate(location, .before = reg)%>%
   mutate(reg = NULL) %>%
-  #mutate(clage_vacsi = NULL) %>%
   rename(date = "jour")%>%
   add_column(resolution = 1, .before="location") %>%
   add_column(country = "France", .before="resolution") 
@@ -61,39 +57,6 @@ kkk <- xxx %>%
   mutate(clage_vacsi=NULL)
 
 
-# mutate(pop = case_when(
-#   location == "Auvergne-Rhône-Alpes" ~ "8092598",
-#   location == "Bourgogne-Franche-Comté" ~ "2786205",
-#   location == "Bretagne" ~ "3371297",
-#   location == "Centre-Val de Loire" ~ "2562431",
-#   location == "Corse" ~ "349273",
-#   location == "Grand Est" ~ "5524817",
-#   location == "Guyane" ~ "Normandie",
-#   location == "Hauts-de-France" ~ "5977462",
-#   location == "Ile-de-France" ~ "12326429",
-#   location == "Normandie" ~ "3306092",
-#   location == "Nouvelle-Aquitaine" ~ "6039767",
-#   location == "Occitanie" ~ "5985751",
-#   location == "Pays de la Loire" ~ "3838060",
-#   location == "Provence-Alpes-Côte d’Azur" ~ "5089661"))%>%
-# kkk <- kkk %>%
-#   mutate(pop = case_when(
-#     endsWith(location, "Auvergne-Rhône-Alpes") ~ "8092598",
-#     endsWith(location, "Bourgogne-Franche-Comté") ~ "2786205",
-#     endsWith(location, "Bretagne") ~ "3371297",
-#     endsWith(location, "Centre-Val de Loire") ~ "2562431",
-#     endsWith(location, "Corse") ~ "349273",
-#     endsWith(location, "Grand Est") ~ "5524817",
-#     endsWith(location, "Hauts-de-France") ~ "5977462",
-#     endsWith(location, "Île-de-France") ~ "12326429",
-#     endsWith(location, "Normandie") ~ "3306092",
-#     endsWith(location, "Nouvelle-Aquitaine") ~ "6039767",
-#     endsWith(location, "Occitanie") ~ "5985751",
-#     endsWith(location, "Pays de la Loire") ~ "3838060",
-#     endsWith(location, "Provence-Alpes-Côte d'Azur") ~ "5089661"
-#   ))%>%
-#   relocate(pop, .before = date)
-
 
 kkk <- kkk %>%
   mutate(pop = case_when(
@@ -113,10 +76,6 @@ kkk <- kkk %>%
   filter(!is.na(pop))%>%
   relocate(pop, .after = location)
 
-
-
-table(kkk$location)
-View(kkk)
 
 #write_xlsx(kkk,"/Users/mac/Desktop/research/FR_Set_1.xlsx")
 
