@@ -21,7 +21,9 @@ Second author, Lead Data Manager
 
 ## Contribution
 
-Second
+*	Examined temporal trends of vaccination rates across socioeconomic groups at different spatial levels and understood disparities
+*	Performed data aggregation on publicly available SARS-CoV-2 data from over a dozen countries across all inhabited continents
+*	A brief introdcution on my contribution can be found __[here](https://github.com/ikgyu98/Online-CV/blob/main/vaccine-inequality/vacc_inequal_symposium.pdf)__.
 
 ## File Description
 
