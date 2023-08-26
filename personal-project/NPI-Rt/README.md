@@ -37,4 +37,4 @@ Please refer to the abstract section of the written report **temporary-report.pd
 
 ## Acknowledgements
 
-- *This project borrowed knowledges from __[this precedence post](https://www.kdnuggets.com/2020/02/audio-data-analysis-deep-learning-python-part-1.html)__.*
+- *This project borrowed knowledges from __[this R package documentation](https://rdrr.io/cran/EpiEstim/src/R/estimate_r.R)__.*
