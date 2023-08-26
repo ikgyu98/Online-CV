@@ -21,12 +21,6 @@ ke_ses <- read_csv("Desktop/research/kenya/poverty_kenya_table_2015.csv")%>%
   rename(location=`Residence/ County`)%>%
   mutate(country = "Kenya")%>%
   relocate(country, .before = location)
-  
-View(ke_ses)
 
 
 write_csv(ke_ses ,"Desktop/research/kenya/KE_Set_2.csv")
-
-
-
-#colnames(ke_ses)
