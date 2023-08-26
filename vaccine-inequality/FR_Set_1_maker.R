@@ -36,7 +36,6 @@ a<-france %>%
     reg == "08" ~ "Saint-Martin", TRUE ~ as.character(reg)))%>%
   relocate(location, .before = reg)%>%
   mutate(reg = NULL) %>%
-  #mutate(clage_vacsi = NULL) %>%
   rename(date = "jour")%>%
   add_column(resolution = 1, .before="location") %>%
   add_column(country = "France", .before="resolution") 
@@ -52,8 +51,6 @@ b <- a %>%
   mutate(couv_rappel= NULL)%>%
   rename("partial" = 6, "full" = 7, "3 or booster" = 8)%>%
   pivot_longer(6:8, names_to = "dose", values_to = "vnum")
-  # pivot_longer(n_dose1:n_rappel, names_to = c("partial", "full", "3 or booster"), values_to = "vnum")%>%
-  # pivot_longer(n_dose1:n_rappel, names_to = c("partial", "full", "3 or booster"), values_to = "vnum")
 
 
 
@@ -68,8 +65,6 @@ c <- a %>%
   rename("partial" = 6, "full" = 7, "3 or booster" = 8)%>%
   pivot_longer(6:8, names_to = "dose", values_to = "vnum")
 
-table(c$location)
-View(c)
 
 d <- a %>%
   filter(clage_vacsi == "11")
@@ -108,9 +103,6 @@ kkk <- a %>%
   rename("partial" = 6, "full" = 7, "3 or booster" = 8)%>%
   pivot_longer(6:8, names_to = "dose", values_to = "vnum")
 
-View(kkk)
-
-
 
 zzz <- a %>%
   group_by(clage_vacsi) %>%
@@ -122,9 +114,6 @@ zzz <- a %>%
   mutate(couv_rappel= NULL)%>%
   rename("partial" = 6, "full" = 7, "3 or booster" = 8)%>%
   pivot_longer(6:8, names_to = "dose", values_to = "vnum")
-
-
-table(zzz$clage_vacsi)
 
 # 0 : Tous âges
 # 04 : 0-4
@@ -142,15 +131,6 @@ table(zzz$clage_vacsi)
 # 79 : 75-79
 # 80 : 80 et 
 
-#View(a)
-View(b)
-
-
-
-# View(france)
-# colnames(france)
-# 
-# table(france$clage_vacsi)
 
 
 
