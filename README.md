@@ -6,6 +6,8 @@
 
 > Projects performed during the graduate studies
 
+* *__[Capstone with Zeteo: RAG-based Chatbot Hyperpersonalization Interim Report](https://github.com/ikgyu98/Online-CV/blob/main/capstone-project/individual/%5BCapstone%20with%20Zeteo%5D%20Interim%20Report.pdf)__* 
+
 * *__[Enhancing Text Summarization of Biomedical Journal Papers with Domain-Specific Knowledge Integration in State-of-the-Art NLP Models](https://github.com/itsjustnilay/Text_Summarization_LLMs)__* 
 
 * *__[Predicting Systemic Lupus Erythematosus (SLE)-Associated Epitopes using Deep Learning](https://github.com/itsjustnilay/Epitope_Prediction_DL)__* 
