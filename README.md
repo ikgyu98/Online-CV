@@ -10,6 +10,8 @@
 
 * *__[[Group Capstone] Parkinsons-Cognitive-LLM](https://github.com/itsjustnilay/Parkinsons-Cognitive-LLM)__*
 
+* *__[Connecticut Senate Bill 181-compliant ED Boarding Dashboard](https://github.com/ikgyu98/Online-CV/tree/main/ed-dashboard)__*
+
 * *__[Enhancing Text Summarization of Biomedical Journal Papers with Domain-Specific Knowledge Integration in State-of-the-Art NLP Models](https://github.com/itsjustnilay/Text_Summarization_LLMs)__* 
 
 * *__[Predicting Systemic Lupus Erythematosus (SLE)-Associated Epitopes using Deep Learning](https://github.com/itsjustnilay/Epitope_Prediction_DL)__* 
