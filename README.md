@@ -6,7 +6,7 @@
 
 > Projects performed during the graduate studies
 
-* *__[[Capstone with Zeteo] Slide Deck.pdf](https://github.com/ikgyu98/Online-CV/blob/main/capstone-project/individual/%5BCapstone%20with%20Zeteo%5D%20Final%20Slide%20Deck.pdf)__* 
+* *__[[Capstone with Zeteo] Slide Deck.pdf](https://github.com/ikgyu98/Online-CV/blob/main/capstone-project/individual/%5BCapstone%20with%20Zeteo%5D%20Slide%20Deck.pdf)__* 
 
 * *__[Enhancing Text Summarization of Biomedical Journal Papers with Domain-Specific Knowledge Integration in State-of-the-Art NLP Models](https://github.com/itsjustnilay/Text_Summarization_LLMs)__* 
 
